@@ -1,0 +1,21 @@
+groups:
+  - name: backup
+    rules:
+      - alert: BackupFailed
+        expr: backup_last_status == 0
+        for: 1m
+        labels: {severity: critical}
+        annotations:
+          summary: "Backup FAILED on {{ $labels.instance }}"
+      - alert: BackupMissing
+        expr: time() - backup_last_run_timestamp_seconds > 90000 or absent(backup_last_status)
+        for: 5m
+        labels: {severity: critical}
+        annotations:
+          summary: "No backup in the last 25 hours"
+      - alert: AppServerDown
+        expr: up{job="app-server"} == 0
+        for: 2m
+        labels: {severity: critical}
+        annotations:
+          summary: "App server is unreachable"

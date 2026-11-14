@@ -1,0 +1,13 @@
+# secrets
+*.pem
+*.cnf
+.env
+slack_url
+# runtime files
+*.log
+*.prom
+# never commit backup data
+*.gz
+*.sql
+*.tar
+backups/

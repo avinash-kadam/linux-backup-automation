@@ -1,0 +1,11 @@
+route:
+  receiver: slack
+  group_wait: 10s
+  repeat_interval: 4h
+receivers:
+  - name: slack
+    slack_configs:
+      # Webhook URL is kept in a separate file, never in Git
+      - api_url_file: /etc/prometheus/slack_url
+        send_resolved: true
+        title: '{{ .CommonAnnotations.summary }}'
